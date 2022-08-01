@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:38:13 by hyko              #+#    #+#             */
-/*   Updated: 2022/07/30 22:45:04 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/01 15:07:11 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	print_struct(t_game *game)
+void	print_game(t_game *game)
 {
 	printf("num_of_philo : %d\n", game->num_of_philo);
 	printf("time_to_die : %d\n", game->time_to_die);
@@ -20,6 +20,20 @@ void	print_struct(t_game *game)
 	printf("time_to_sleep : %d\n", game->time_to_sleep);
 	printf("must_eat : %d\n", game->must_eat);
 	printf("death_check : %d\n", game->death_check);
+}
+
+void	print_philo(t_game *game)
+{
+	int	i = 0;
+	while (i < game->num_of_philo)
+	{
+		printf("num : %d\n", game->philo[i].num);
+		printf("l_fork : %p\n", game->philo[i].left_fork);
+		printf("r_fork : %p\n", game->philo[i].right_fork);
+		printf("eat_cnt : %d\n", game->philo[i].eat_cnt);
+		printf("death : %d\n\n", game->philo[i].death);
+		i++;
+	}
 }
 
 int	check_arg(int argc, char **argv, t_game *game)
@@ -54,6 +68,7 @@ int	malloc_struct(t_game *game)
 	if (game->philo == NULL)
 		return (-1);
 	game->fork = malloc(sizeof(pthread_mutex_t) * game->num_of_philo);
+	printf("num of philo : %d\n", game->num_of_philo);
 	if (game->fork == NULL)
 		return (-1);
 	return (0);
@@ -68,7 +83,28 @@ int	init_game(int argc, char **argv, t_game *game)
 	}
 	if (malloc_struct(game) < 0)
 		return (print_error_msg("error : malloc failed\n"));
+	
+	int	i = 0;
+	printf("%p\n",(game->fork));
+	while (i < game->num_of_philo)
+	{
+		pthread_mutex_init(&(game->fork[i]), NULL);
+		// printf("i = %d, ptr : %p\n", i, &(game->fork[i]));
+		i++;
+	}
 	return (0);
+}
+
+void * philo_thread(void *philo)
+{
+	t_philo * p = (t_philo *)philo;
+	if (p->num  == 3)
+	{
+		printf("sleep, %d\n", p->num);
+		sleep(10);
+		printf("wake up, %d\n", p->num);
+	}
+	return(0);
 }
 
 int	init_philo(t_game *game)
@@ -76,43 +112,44 @@ int	init_philo(t_game *game)
 	int	i;
 	t_philo	*philo; 
 
-	i = 0;
 	philo = game->philo;
+	i = 0;
 	while (i < game->num_of_philo)
 	{
 		philo[i].num = i + 1;
-		// ???
-		// pthread_create(&(philo[i].thread), NULL, &(philo_thread), &(philo[i]));
-		philo[i].left_fork = game->fork[i];
+		pthread_create(&(philo[i].thread), NULL, &(philo_thread), &(philo[i]));		//pthread_t, pthread_attr_t, 함수, 매개변수
+		// 
+		usleep(1000);
+		philo[i].left_fork = &game->fork[i];
 		if ((i + 1) == game->num_of_philo)
-			philo[i].right_fork = game->fork[0];
-		philo[i].right_fork = game->fork[i + 1];
+			philo[i].right_fork = &game->fork[0];
+		else
+			philo[i].right_fork = &game->fork[i + 1];
 		i++;
 	}
-	// i = 0;
-	// while (i < game->num_of_philo)
-	// {
-	// 	printf("num : %d\n", philo[i].num);
-	// 	printf("l_fork : %d\n", philo[i].left_fork);
-	// 	printf("r_fork : %d\n", philo[i].right_fork);
-	// 	printf("eat_cnt : %d\n", philo[i].eat_cnt);
-	// 	printf("death : %d\n\n", philo[i].death);
-	// 	i++;
-	// }
+	return (0);
 }
 
 int	main(int argc, char **argv)
 {
 	t_game *game;
-
+	int	i;
 	game = malloc(sizeof(t_game));
 	if (game == NULL)
 		return (print_error_msg("error : malloc failed\n"));
 	if (init_game(argc, argv, game) < 0)
 		return (print_error_msg("error : game initialize failed\n"));
-	// print_struct(game);
+	// print_game(game);
 	if (init_philo(game) < 0)
 		return (print_error_msg("error : philo initialize failed\n"));
-	
+	// print_philo(game);
+	i = 0;
+	while (i < game->num_of_philo)
+	{
+		// printf("before join\n");
+		pthread_join(game->philo[i].thread, NULL);
+		// printf("%d, %d\n", i, game->philo[i].num);
+		i++;
+	}
 	return (0);
 }

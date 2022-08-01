@@ -1,0 +1,12 @@
+{
+	"files.associations": {
+		"__config": "c",
+		"__threading_support": "c",
+		"memory": "c",
+		"thread": "c",
+		"version": "c",
+		"*.tcc": "c",
+		"mutex": "c",
+		"stop_token": "c"
+	}
+}

@@ -6,57 +6,113 @@
 /*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:38:13 by hyko              #+#    #+#             */
-/*   Updated: 2022/07/12 22:25:35 by hyko             ###   ########.fr       */
+/*   Updated: 2022/07/30 22:45:04 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "philo.h"
 
-int	ft_atoi(const char *str)
+void	print_struct(t_game *game)
 {
-	long long	i;
-	long long	sign;
-	long long	result;
+	printf("num_of_philo : %d\n", game->num_of_philo);
+	printf("time_to_die : %d\n", game->time_to_die);
+	printf("time_to_eat : %d\n", game->time_to_eat);
+	printf("time_to_sleep : %d\n", game->time_to_sleep);
+	printf("must_eat : %d\n", game->must_eat);
+	printf("death_check : %d\n", game->death_check);
+}
+
+int	check_arg(int argc, char **argv, t_game *game)
+{
+	int	i;
+
+	if (argc < 5 || argc > 6)
+		return (-1);
+	i = 1;
+	while (argv[i])
+	{
+		if (is_num(argv[i]) < 0)
+			return (-1);
+		i++;
+	}
+	game->num_of_philo = ft_atol(argv[1]);
+	game->time_to_die = ft_atol(argv[2]);
+	game->time_to_eat = ft_atol(argv[3]);
+	game->time_to_sleep = ft_atol(argv[4]);
+	if (argc == 6)
+		game->must_eat = ft_atol(argv[5]);
+	else
+		game->must_eat = 0;
+	if (game->num_of_philo < 0 || game->time_to_die < 0|| game->time_to_eat < 0 || game->time_to_sleep < 0 || game->must_eat < 0)
+		return (-1);
+	return (0);
+}
+
+int	malloc_struct(t_game *game)
+{
+	game->philo = malloc(sizeof(t_philo) * game->num_of_philo);
+	if (game->philo == NULL)
+		return (-1);
+	game->fork = malloc(sizeof(pthread_mutex_t) * game->num_of_philo);
+	if (game->fork == NULL)
+		return (-1);
+	return (0);
+}
+
+int	init_game(int argc, char **argv, t_game *game)
+{	
+	if (check_arg(argc, argv, game) < 0)
+	{
+		free (game);
+		return (print_error_msg("error : invalid argument\n"));
+	}
+	if (malloc_struct(game) < 0)
+		return (print_error_msg("error : malloc failed\n"));
+	return (0);
+}
+
+int	init_philo(t_game *game)
+{
+	int	i;
+	t_philo	*philo; 
 
 	i = 0;
-	sign = 1;
-	result = 0;
-	while ((9 <= str[i] && str[i] <= 13) || str[i] == 32)
-		i++;
-	if (str[i] == '-' || str[i] == '+')
+	philo = game->philo;
+	while (i < game->num_of_philo)
 	{
-		if (str[i] == '-')
-			sign = sign * -1;
+		philo[i].num = i + 1;
+		// ???
+		// pthread_create(&(philo[i].thread), NULL, &(philo_thread), &(philo[i]));
+		philo[i].left_fork = game->fork[i];
+		if ((i + 1) == game->num_of_philo)
+			philo[i].right_fork = game->fork[0];
+		philo[i].right_fork = game->fork[i + 1];
 		i++;
 	}
-	while ('0' <= str[i] && str[i] <= '9')
-	{
-		result = result * 10 + (str[i] - 48);
-		if (result * sign > 2147483647)
-			return (-1);
-		else if (result * sign < -2147483648)
-			return (0);
-		i++;
-	}
-	return (result * sign);
+	// i = 0;
+	// while (i < game->num_of_philo)
+	// {
+	// 	printf("num : %d\n", philo[i].num);
+	// 	printf("l_fork : %d\n", philo[i].left_fork);
+	// 	printf("r_fork : %d\n", philo[i].right_fork);
+	// 	printf("eat_cnt : %d\n", philo[i].eat_cnt);
+	// 	printf("death : %d\n\n", philo[i].death);
+	// 	i++;
+	// }
 }
 
 int	main(int argc, char **argv)
 {
-	int	number_of_philosophers;
-	int	time_to_die;
-	int	time_to_eat;
-	int	time_to_sleep;
-	int	number_of_times_each_philosopher_must_eat;
+	t_game *game;
 
-	if (argc < 5 || argc > 6)
-		return (0);
-	number_of_philosophers = ft_atoi(argv[1]);
-	time_to_die = ft_atoi(argv[2]);
-	time_to_eat = ft_atoi(argv[3]);
-	time_to_sleep = ft_atoi(argv[4]);
-	if (argc == 6)
-		number_of_times_each_philosopher_must_eat = ft_atoi(argv[5]);
-	else
-		number_of_times_each_philosopher_must_eat = 0;
+	game = malloc(sizeof(t_game));
+	if (game == NULL)
+		return (print_error_msg("error : malloc failed\n"));
+	if (init_game(argc, argv, game) < 0)
+		return (print_error_msg("error : game initialize failed\n"));
+	// print_struct(game);
+	if (init_philo(game) < 0)
+		return (print_error_msg("error : philo initialize failed\n"));
+	
+	return (0);
 }

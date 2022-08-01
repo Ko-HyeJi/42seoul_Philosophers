@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:38:13 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/01 15:07:11 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/01 15:36:20 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,18 +92,15 @@ int	init_game(int argc, char **argv, t_game *game)
 		// printf("i = %d, ptr : %p\n", i, &(game->fork[i]));
 		i++;
 	}
+	gettimeofday(&game->start_time, NULL);
+	printf("start_time : %ld\n", game->start_time);
 	return (0);
 }
 
 void * philo_thread(void *philo)
 {
 	t_philo * p = (t_philo *)philo;
-	if (p->num  == 3)
-	{
-		printf("sleep, %d\n", p->num);
-		sleep(10);
-		printf("wake up, %d\n", p->num);
-	}
+	
 	return(0);
 }
 

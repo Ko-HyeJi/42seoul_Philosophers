@@ -7,8 +7,8 @@ void	print_game(t_game *game)
 	printf("time_to_eat : %d\n", game->time_to_eat);
 	printf("time_to_sleep : %d\n", game->time_to_sleep);
 	printf("must_eat : %d\n", game->must_eat);
-	printf("death_check : %d\n", game->death_check);
-	// printf("start_time : %d\n", game->start_time.tv_usec);
+	printf("death_check : %d\n", game->death_flag);
+	printf("start_time : %lu\n", game->start_time);
 	printf("\n");
 }
 

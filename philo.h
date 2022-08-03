@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 16:08:49 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/03 13:44:56 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/03 15:40:22 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_game
 	int	time_to_eat;
 	int	time_to_sleep;
 	int	must_eat;
-	int	death_check;
+	int	death_flag;
 	// struct timeval	start_time;
 	unsigned long	start_time;
 	pthread_mutex_t print;
@@ -56,7 +56,7 @@ void * philo_thread(void *philo);
 int	is_num(char *str);
 long long	ft_atol(const char *str);
 int	print_error_msg(char *msg);
-unsigned long	get_ms_time(struct timeval time);
+unsigned long	get_ms_time(void);
 
 /* initialize.c */
 int	check_arg(int argc, char **argv, t_game *game);
@@ -66,8 +66,12 @@ int	init_game(int argc, char **argv, t_game *game);
 int	init_philo(t_game *game, t_philo *philo);
 
 /* thread.c */
-// int	time_check(t_philo *philo);
-// int	death_check(t_philo	*philo);
+unsigned long	time_check(t_philo *philo);
+int	death_check(t_philo	*philo);
+int	print_msg(t_philo *philo, char type);
+int	philo_grab_fork(t_philo *philo);
+int	philo_eat(t_philo *philo);
+int	philo_sleep(t_philo *philo);
 void * philo_thread(void *param);
 
 /* tmp -> 지워야함!!! */

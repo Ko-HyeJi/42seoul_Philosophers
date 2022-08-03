@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 09:21:26 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/03 13:41:37 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/03 15:28:04 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ int	malloc_struct(t_game *game)
 
 int	init_game(int argc, char **argv, t_game *game)
 {	
-	struct timeval	time_stamp;
-	
 	if (check_arg(argc, argv, game) < 0)
 	{
 		free (game);
@@ -71,8 +69,7 @@ int	init_game(int argc, char **argv, t_game *game)
 		pthread_mutex_init(&(game->fork[i]), NULL);
 		i++;
 	}
-	gettimeofday(&time_stamp, NULL);
-	game->start_time = get_ms_time(time_stamp);
+	game->start_time = get_ms_time();
     pthread_mutex_init(&game->print, NULL);
 	return (0);
 }
@@ -96,5 +93,6 @@ int	init_philo(t_game *game, t_philo *philo)
 		usleep(10);
 		i++;
 	}
+	pthread_join(philo->thread, NULL);
 	return (0);
 }

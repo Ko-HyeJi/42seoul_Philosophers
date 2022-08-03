@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 14:45:35 by hyko              #+#    #+#             */
-/*   Updated: 2022/07/30 21:59:27 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/03 13:47:31 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,3 +62,13 @@ int	print_error_msg(char *msg)
 	printf("%s", msg);
 	return (-1);
 }
+
+unsigned long	get_ms_time(struct timeval time)
+{
+	unsigned long ms_time;
+	
+	ms_time = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	return (ms_time);
+}
+
+// int	sleep();

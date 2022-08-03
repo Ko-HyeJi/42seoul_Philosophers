@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 09:21:26 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/03 15:28:04 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/03 19:30:38 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,9 @@ int	init_game(int argc, char **argv, t_game *game)
 		i++;
 	}
 	game->start_time = get_ms_time();
-    pthread_mutex_init(&game->print, NULL);
+	game->death_flag = 0;
+    pthread_mutex_init(&game->death_mutex, NULL);
+	pthread_mutex_init(&game->print, NULL);
 	return (0);
 }
 

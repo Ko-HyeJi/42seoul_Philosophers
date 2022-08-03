@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 11:02:48 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/03 16:48:15 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/03 19:52:52 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,22 @@ int	death_check(t_philo	*philo) // 누군가 죽었는지? + 내가 죽었는지
 {
 	unsigned long	time_gap;
 	
+	pthread_mutex_lock(&philo->game->death_mutex);
 	if (philo->game->death_flag != 0)
+	{
+		pthread_mutex_unlock(&philo->game->death_mutex);
 		return (TRUE);
+	}
 	
 	time_gap = get_ms_time() - philo->last_eat;
-	if (time_gap > philo->game->time_to_die)
+	if (time_gap >= philo->game->time_to_die)
 	{
 		philo->game->death_flag = philo->num;
 		print_msg(philo, 'd');
+		pthread_mutex_unlock(&philo->game->death_mutex);
 		return (TRUE);
 	}
+	pthread_mutex_unlock(&philo->game->death_mutex);
 	return (FALSE);
 }
 
@@ -59,7 +65,6 @@ int	print_msg(t_philo *philo, char type)
 	return (0);
 }
 
-
 int	philo_grab_fork(t_philo *philo)
 {
 	pthread_mutex_lock(philo->left_fork); //left_fork
@@ -79,8 +84,7 @@ int	philo_eat(t_philo *philo)
 	philo->eat_cnt++;
 	if (death_check(philo) == TRUE)
 		return (-1);
-	usleep(philo->game->time_to_eat * 1000);
-	// philo_usleep(philo->game->time_to_eat * 1000);
+	philo_alarm(philo->game->time_to_eat);
 	philo->last_eat = get_ms_time();
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
@@ -92,8 +96,7 @@ int	philo_sleep(t_philo *philo)
 	if (death_check(philo) == TRUE)
 		return (-1);	
 	print_msg(philo, 's');
-	usleep(philo->game->time_to_sleep * 1000);
-	// philo_usleep(philo->game->time_to_sleep * 1000);
+	philo_alarm(philo->game->time_to_eat);
 	if (death_check(philo) == TRUE)
 		return (-1);
 	print_msg(philo, 't');
@@ -106,6 +109,7 @@ void * philo_thread(void *param) //매개변수를 void*로 받아서 t_philo*�
 
 	if (philo->num % 2 == 1) //홀수번 필로 대기
 		usleep(10);
+		
 	while (philo->eat_cnt != philo->game->must_eat && philo->game->death_flag == 0)
 	{
 		if (philo_grab_fork(philo) < 0)

@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 16:08:49 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/03 15:59:27 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/03 19:23:39 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_game
 	int	time_to_sleep;
 	int	must_eat;
 	int	death_flag;
+	pthread_mutex_t death_mutex;
 	// struct timeval	start_time;
 	unsigned long	start_time;
 	pthread_mutex_t print;
@@ -57,8 +58,7 @@ int	is_num(char *str);
 long long	ft_atol(const char *str);
 int	print_error_msg(char *msg);
 unsigned long	get_ms_time(void);
-//함수 이름 수정
-// void	philo_usleep(unsigned long time);
+void	philo_alarm(unsigned long time);
 
 /* initialize.c */
 int	check_arg(int argc, char **argv, t_game *game);

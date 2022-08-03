@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:38:13 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/03 15:01:39 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/03 18:59:08 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,12 @@ int	main(int argc, char **argv)
 		return (print_error_msg("error : malloc failed\n"));
 	if (init_philo(game, philo) < 0)
 		return (print_error_msg("error : philo initialize failed\n"));
-	
+	/////////////////////////////////
+	// 필로가 한명인 경우 예외처리 //
+	/////////////////////////////////
+
 	free(game->fork);
+	free(game);
 	
 	// print_philo(game, philo);
 	// i = 0;

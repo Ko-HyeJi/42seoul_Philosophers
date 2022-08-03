@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 11:02:48 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/03 15:44:58 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/03 16:48:15 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ unsigned long	time_check(t_philo *philo) //현재시간 - 시작시간
 	unsigned long	time_gap;
 	
 	time_gap = get_ms_time() - philo->game->start_time;
-	// printf("1. %lu\n", get_ms_time());
-	// printf("2. %lu\n", philo->game->start_time);
 	return (time_gap);
 }
 
@@ -82,6 +80,7 @@ int	philo_eat(t_philo *philo)
 	if (death_check(philo) == TRUE)
 		return (-1);
 	usleep(philo->game->time_to_eat * 1000);
+	// philo_usleep(philo->game->time_to_eat * 1000);
 	philo->last_eat = get_ms_time();
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
@@ -94,6 +93,7 @@ int	philo_sleep(t_philo *philo)
 		return (-1);	
 	print_msg(philo, 's');
 	usleep(philo->game->time_to_sleep * 1000);
+	// philo_usleep(philo->game->time_to_sleep * 1000);
 	if (death_check(philo) == TRUE)
 		return (-1);
 	print_msg(philo, 't');

@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 16:08:49 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/03 15:40:22 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/03 15:59:27 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int	is_num(char *str);
 long long	ft_atol(const char *str);
 int	print_error_msg(char *msg);
 unsigned long	get_ms_time(void);
+//함수 이름 수정
+// void	philo_usleep(unsigned long time);
 
 /* initialize.c */
 int	check_arg(int argc, char **argv, t_game *game);

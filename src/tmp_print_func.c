@@ -17,7 +17,7 @@ void	print_philo(t_game *game, t_philo *philo)
 	int	i = 0;
 	while (i < game->num_of_philo)
 	{
-		printf("num : %d\n", philo[i].num);
+		printf("num : %d\n", philo[i].id);
 		printf("l_fork : %p\n", philo[i].left_fork);
 		printf("r_fork : %p\n", philo[i].right_fork);
 		printf("eat_cnt : %d\n", philo[i].eat_cnt);

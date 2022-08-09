@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 09:21:26 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/03 19:30:38 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/09 19:40:37 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	init_game(int argc, char **argv, t_game *game)
 		return (print_error_msg("error : invalid argument\n"));
 	}
 	if (malloc_struct(game) < 0)
-		return (print_error_msg("error : malloc failed\n"));
+		return (print_error_msg("error : memory allocation failed\n"));
 	
 	int	i = 0;
 	while (i < game->num_of_philo)
@@ -71,7 +71,7 @@ int	init_game(int argc, char **argv, t_game *game)
 	}
 	game->start_time = get_ms_time();
 	game->death_flag = 0;
-    pthread_mutex_init(&game->death_mutex, NULL);
+    // pthread_mutex_init(&game->death_check_mutex, NULL);
 	pthread_mutex_init(&game->print, NULL);
 	return (0);
 }
@@ -79,11 +79,11 @@ int	init_game(int argc, char **argv, t_game *game)
 int	init_philo(t_game *game, t_philo *philo)
 {
 	int	i;
-
+	
 	i = 0;
 	while (i < game->num_of_philo)
 	{
-		philo[i].num = i + 1;
+		philo[i].id = i + 1;
 		philo[i].left_fork = &game->fork[i];
 		if ((i + 1) == game->num_of_philo)
 			philo[i].right_fork = &game->fork[0];
@@ -95,6 +95,39 @@ int	init_philo(t_game *game, t_philo *philo)
 		usleep(10);
 		i++;
 	}
+
+	//monitoring
+	pthread_create(&(game->monitoring), NULL, &(monitoring_thread), &(philo[0]));
+	
 	pthread_join(philo->thread, NULL);
+	return (0);
+}
+
+
+void	*monitoring_thread(void *param)
+{
+	t_philo *philo = (t_philo *)param;
+	int	i;
+
+	while (philo->game->death_flag == 0)
+	{
+		i = 0;
+		while (i < philo->game->num_of_philo)
+		{
+			if (get_ms_time() - philo[i].last_eat >= philo->game->time_to_die)
+			{
+				philo->game->death_flag = i + 1;
+				print_msg(&philo[i], 'd');
+				// i = 0;
+				// while (i < philo->game->num_of_philo)
+				// {
+				// 	pthread_mutex_destroy(philo[i].thread, )
+				// }
+				break ;
+			}
+			i++;
+		}
+		usleep(100); // 0.1ms
+	}
 	return (0);
 }

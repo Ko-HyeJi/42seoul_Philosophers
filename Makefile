@@ -6,7 +6,7 @@
 #    By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/09 15:40:30 by hyko              #+#    #+#              #
-#    Updated: 2022/08/09 15:46:29 by hyko             ###   ########.fr        #
+#    Updated: 2022/08/09 17:15:02 by hyko             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ INCLUDE = include
 SRC = $(addprefix ./src/, main.c\
 philo_utils.c\
 initialize.c\
-thread.c)
+thread.c\
+routine.c)
 
 OBJ = $(SRC:.c=.o)
 

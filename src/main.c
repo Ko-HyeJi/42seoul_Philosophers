@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:38:13 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/03 18:59:08 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/04 16:58:44 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ int	main(int argc, char **argv)
 		return (print_error_msg("error : malloc failed\n"));
 	if (init_philo(game, philo) < 0)
 		return (print_error_msg("error : philo initialize failed\n"));
-	/////////////////////////////////
+	//////////////////////////
 	// 필로가 한명인 경우 예외처리 //
-	/////////////////////////////////
+	//////////////////////////
 
 	free(game->fork);
 	free(game);

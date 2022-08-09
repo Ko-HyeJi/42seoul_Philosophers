@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   thread.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 11:02:48 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/03 19:52:52 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/04 16:50:26 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void * philo_thread(void *param) //매개변수를 void*로 받아서 t_philo*�
 	t_philo *philo = (t_philo *)param;
 
 	if (philo->num % 2 == 1) //홀수번 필로 대기
-		usleep(10);
+		usleep(100);
 		
 	while (philo->eat_cnt != philo->game->must_eat && philo->game->death_flag == 0)
 	{

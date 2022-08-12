@@ -3,37 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   thread.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 11:02:48 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/09 19:55:33 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/12 23:20:28 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-// int	death_check(t_philo	*philo) // 누군가 죽었는지? + 내가 죽었는지?
-// {
-// 	unsigned long	time_gap;
-	
-// 	pthread_mutex_lock(&philo->game->death_check_mutex);
-// 	if (philo->game->death_flag != 0)
-// 	{
-// 		pthread_mutex_unlock(&philo->game->death_check_mutex);
-// 		return (TRUE);
-// 	}
-	
-// 	time_gap = get_ms_time() - philo->last_eat;
-// 	if (time_gap >= philo->game->time_to_die) // 등호 확인 > or >=
-// 	{
-// 		philo->game->death_flag = philo->id;
-// 		print_msg(philo, 'd');
-// 		pthread_mutex_unlock(&philo->game->death_check_mutex);
-// 		return (TRUE);
-// 	}
-// 	pthread_mutex_unlock(&philo->game->death_check_mutex);
-// 	return (FALSE);
-// }
 
 unsigned long	time_check(t_philo *philo) //현재시간 - 시작시간
 {
@@ -46,22 +23,6 @@ unsigned long	time_check(t_philo *philo) //현재시간 - 시작시간
 int	print_msg(t_philo *philo, char type)
 {
 	pthread_mutex_lock(&(philo->game->print));
-	// if (death_check(philo) == TRUE && type != 'd')
-	// 	return (-1);
-	// else
-	// {
-	// 	if (type == 'f')
-	// 		printf("%lu %d has taken a fork\n", time_check(philo), philo->id);
-	// 	else if (type == 'e')
-	// 		printf("%lu %d is eating\n", time_check(philo), philo->id);
-	// 	else if (type == 's')
-	// 		printf("%lu %d is sleeping\n", time_check(philo), philo->id);
-	// 	else if (type == 't')
-	// 		printf("%lu %d is thinking\n", time_check(philo), philo->id);
-	// 	else if (type == 'd')
-	// 		printf("%lu %d is died\n", time_check(philo), philo->id);
-	// 	pthread_mutex_unlock(&(philo->game->print));
-	// }
 	if (philo->game->death_flag == 0)
 	{
 		if (type == 'f')
@@ -101,16 +62,35 @@ void *philo_thread(void *param) //매개변수를 void*로 받아서 t_philo*로
 			philo_eat(philo);
 		else
 			break ;
-		if (philo->game->death_flag == 0)
+		if (philo->game->death_flag == 0 && philo->eat_cnt != philo->game->must_eat)
 			philo_sleep(philo);
 		else
 			break ;
-		// if (philo_grab_fork(philo) < 0)
-		// 	break ;
-		// if (philo_eat(philo) < 0)
-		// 	break ;
-		// if (philo_sleep(philo) < 0)
-		// 	break ;
 	}
-	return(philo);
+	// if (philo->game->must_eat == philo->eat_cnt)
+	// 	printf("philo eat done!!!\n");
+	return (philo);
+}
+
+void	*monitoring_thread(void *param)
+{
+	t_philo *philo = (t_philo *)param;
+	int	i;
+
+	while (philo->game->death_flag == 0)
+	{
+		i = 0;
+		while (i < philo->game->num_of_philo)
+		{
+			if (get_ms_time() - philo[i].last_eat >= philo->game->time_to_die)
+			{
+				philo->game->death_flag = i + 1;
+				print_msg(&philo[i], 'd');
+				break ;
+			}
+			i++;
+		}
+		usleep(100); // 0.1ms
+	}
+	return (0);
 }

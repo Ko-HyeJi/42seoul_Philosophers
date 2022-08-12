@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+         #
+#    By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/09 15:40:30 by hyko              #+#    #+#              #
-#    Updated: 2022/08/09 17:15:02 by hyko             ###   ########.fr        #
+#    Updated: 2022/08/12 22:38:17 by hyko             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME = philo
 
 CC = cc
 CFLAG = -Wall -Wextra -Werror
+#-g3 -fsanitize=thread
 DEBUG = -g -fsanitize=address
 RM = rm -rf
 INCLUDE = include

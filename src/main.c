@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:38:13 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/12 23:16:10 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/14 08:49:29 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,14 @@ int	main(int argc, char **argv)
 	//monitoring thread
 	pthread_create(&(game->monitoring), NULL, &(monitoring_thread), &(philo[0]));
 
-	i = 0;
-	while (i < game->num_of_philo)
-	{
-		pthread_join(philo[i].thread, NULL);
-		i++;
-	}
+	// i = 0;
+	// while (i < game->num_of_philo)
+	// {
+	// 	pthread_join(philo[i].thread, NULL);
+	// 	i++;
+	// }
 	pthread_join(game->monitoring, NULL);
+
 
 	free(game->fork);
 	free(game);

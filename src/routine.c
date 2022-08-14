@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 17:11:54 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/12 16:50:07 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/14 09:23:08 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	philo_eat(t_philo *philo)
 	philo->last_eat = get_ms_time();
 	philo->eat_cnt++;
 	philo_alarm(philo->game->time_to_eat);
-	// philo->last_eat = get_ms_time();
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
 	return (0);

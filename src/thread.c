@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   thread.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 11:02:48 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/12 23:20:28 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/14 09:25:05 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,9 @@ void *philo_thread(void *param) //매개변수를 void*로 받아서 t_philo*로
 {
 	t_philo *philo = (t_philo *)param;
 
-	if (philo->id % 2 == 1)
+	if (philo->id % 2 == 0)
 		usleep(100);
-		
-	while (philo->eat_cnt != philo->game->must_eat) // && philo->game->death_flag == 0)
+	while (philo->eat_cnt != philo->game->must_eat)
 	{
 		if (philo->game->death_flag == 0)
 			philo_grab_fork(philo);
@@ -62,13 +61,13 @@ void *philo_thread(void *param) //매개변수를 void*로 받아서 t_philo*로
 			philo_eat(philo);
 		else
 			break ;
-		if (philo->game->death_flag == 0 && philo->eat_cnt != philo->game->must_eat)
+		if (philo->game->death_flag == 0)
 			philo_sleep(philo);
 		else
 			break ;
 	}
-	// if (philo->game->must_eat == philo->eat_cnt)
-	// 	printf("philo eat done!!!\n");
+	philo->game->eat_flag++;
+	pthread_detach(philo->thread);
 	return (philo);
 }
 
@@ -79,10 +78,19 @@ void	*monitoring_thread(void *param)
 
 	while (philo->game->death_flag == 0)
 	{
+		if (philo->game->eat_flag == philo->game->num_of_philo)
+		{
+			printf("All philosophers ate it all\n");
+			break ;
+		}
 		i = 0;
 		while (i < philo->game->num_of_philo)
 		{
-			if (get_ms_time() - philo[i].last_eat >= philo->game->time_to_die)
+			if (philo[i].game->must_eat == philo[i].eat_cnt)
+			{
+				i++;
+			}
+			else if (get_ms_time() - philo[i].last_eat >= philo->game->time_to_die)
 			{
 				philo->game->death_flag = i + 1;
 				print_msg(&philo[i], 'd');

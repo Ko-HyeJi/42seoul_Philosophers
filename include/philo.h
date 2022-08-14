@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 16:08:49 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/09 19:12:10 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/14 09:04:39 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ typedef struct s_game
 	int	time_to_sleep;
 	int	must_eat;
 	int	death_flag;
+	int	eat_flag;
 	pthread_t	monitoring;
-	// pthread_mutex_t death_check_mutex;
 	pthread_mutex_t *fork;
 	pthread_mutex_t print;
 }	t_game;

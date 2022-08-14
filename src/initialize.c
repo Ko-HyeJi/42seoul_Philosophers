@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 09:21:26 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/12 23:15:35 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/15 02:34:25 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,20 @@ int	check_arg(int argc, char **argv, t_game *game)
 	if (game->num_of_philo < 0 || game->time_to_die < 0|| game->time_to_eat < 0 || game->time_to_sleep < 0)
 		return (-1);
 	if (argc == 6)
-    {
+	{
 		game->must_eat = ft_atol(argv[5]);
-        if (game->must_eat < 0)
-            return (-1);
-    }
-    else
+		if (game->must_eat < 0)
+			return (-1);
+	}
+	else
 		game->must_eat = -1;
 	return (0);
 }
 
 int	init_game(int argc, char **argv, t_game *game)
 {	
+	int	i;
+
 	if (check_arg(argc, argv, game) < 0)
 	{
 		free (game);
@@ -56,7 +58,7 @@ int	init_game(int argc, char **argv, t_game *game)
 		free (game);
 		return (print_error_msg("error : memory allocation failed\n"));
 	}
-	int	i = 0;
+	i = 0;
 	while (i < game->num_of_philo)
 	{
 		pthread_mutex_init(&(game->fork[i]), NULL);
@@ -71,7 +73,7 @@ int	init_game(int argc, char **argv, t_game *game)
 int	init_philo(t_game *game, t_philo *philo)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < game->num_of_philo)
 	{
@@ -81,9 +83,9 @@ int	init_philo(t_game *game, t_philo *philo)
 			philo[i].right_fork = &game->fork[0];
 		else
 			philo[i].right_fork = &game->fork[i + 1];
-        philo[i].game = game;
-        philo[i].last_eat = game->start_time;
-		pthread_create(&(philo[i].thread), NULL, &(philo_thread), &(philo[i]));		//pthread_t, pthread_attr_t, 함수, 매개변수
+		philo[i].game = game;
+		philo[i].last_eat = game->start_time;
+		pthread_create(&(philo[i].thread), NULL, &(philo_thread), &(philo[i]));
 		usleep(10);
 		i++;
 	}

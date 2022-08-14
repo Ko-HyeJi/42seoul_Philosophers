@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 11:02:48 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/14 09:25:05 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/15 02:31:03 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 unsigned long	time_check(t_philo *philo) //현재시간 - 시작시간
 {
 	unsigned long	time_gap;
-	
+
 	time_gap = get_ms_time() - philo->game->start_time;
 	return (time_gap);
 }
@@ -33,12 +33,12 @@ int	print_msg(t_philo *philo, char type)
 			printf("%lu %d is sleeping\n", time_check(philo), philo->id);
 		else if (type == 't')
 			printf("%lu %d is thinking\n", time_check(philo), philo->id);
-		pthread_mutex_unlock(&(philo->game->print));		
+		pthread_mutex_unlock(&(philo->game->print));
 	}
 	else if (type == 'd')
 	{
 		printf("%lu %d is died\n", time_check(philo), philo->id);
-		pthread_mutex_unlock(&(philo->game->print));		
+		pthread_mutex_unlock(&(philo->game->print));
 	}
 	else
 		return (-1);
@@ -47,8 +47,9 @@ int	print_msg(t_philo *philo, char type)
 
 void *philo_thread(void *param) //매개변수를 void*로 받아서 t_philo*로 캐스팅 해줘야 함
 {
-	t_philo *philo = (t_philo *)param;
+	t_philo	*philo;
 
+	philo = (t_philo *)param;
 	if (philo->id % 2 == 0)
 		usleep(100);
 	while (philo->eat_cnt != philo->game->must_eat)
@@ -73,9 +74,10 @@ void *philo_thread(void *param) //매개변수를 void*로 받아서 t_philo*로
 
 void	*monitoring_thread(void *param)
 {
-	t_philo *philo = (t_philo *)param;
-	int	i;
+	t_philo	*philo;
+	int		i;
 
+	philo = (t_philo *)param;
 	while (philo->game->death_flag == 0)
 	{
 		if (philo->game->eat_flag == philo->game->num_of_philo)

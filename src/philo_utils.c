@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 14:45:35 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/03 18:57:33 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/15 02:34:49 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ int	print_error_msg(char *msg)
 unsigned long	get_ms_time(void) //현재시간을 ms 단위로 반환
 {
 	struct timeval	time;
-	unsigned long ms_time;
-	
+	unsigned long	ms_time;
+
 	gettimeofday(&time, NULL);
 	ms_time = (time.tv_sec * 1000) + (time.tv_usec / 1000);
 	return (ms_time);
@@ -77,9 +77,9 @@ unsigned long	get_ms_time(void) //현재시간을 ms 단위로 반환
 //최소 인자만큼은 보장을 해주는 것이라 정확한 시간 측정이 필요함
 void	philo_alarm(unsigned long time)
 {
-	unsigned long sleep_time;
-	unsigned long alarm_time;
-	
+	unsigned long	sleep_time;
+	unsigned long	alarm_time;
+
 	sleep_time = get_ms_time();
 	alarm_time = sleep_time + time;
 	while (sleep_time < alarm_time)

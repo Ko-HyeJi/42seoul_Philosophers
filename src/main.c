@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:38:13 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/14 08:49:29 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/15 02:28:27 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,28 +23,16 @@ int	main(int argc, char **argv)
 		return (print_error_msg("error : memory allocation failed\n"));
 	if (init_game(argc, argv, game) < 0)
 		return (print_error_msg("error : game initialization failed\n"));
-	// 필로가 한명인 경우 예외처리 //
 	philo = malloc(sizeof(t_philo) * game->num_of_philo);
 	if (philo == NULL)
 		return (print_error_msg("error : memory allocation failed\n"));
 	if (init_philo(game, philo) < 0)
 		return (print_error_msg("error : philo initialization failed\n"));
-	//monitoring thread
 	pthread_create(&(game->monitoring), NULL, &(monitoring_thread), &(philo[0]));
-
-	// i = 0;
-	// while (i < game->num_of_philo)
-	// {
-	// 	pthread_join(philo[i].thread, NULL);
-	// 	i++;
-	// }
 	pthread_join(game->monitoring, NULL);
-
-
 	free(game->fork);
 	free(game);
 	free(philo);
 	// system("leaks philo");
-	
 	return (0);
 }

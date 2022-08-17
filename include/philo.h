@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 16:08:49 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/15 02:39:06 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/17 17:18:14 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,32 +46,30 @@ typedef struct s_philo
 	unsigned long	last_eat;
 }	t_philo;
 
-/* main.c */
-void			*philo_thread(void *philo);
-
 /* philo_utils.c */
 int				is_num(char *str);
 long long		ft_atol(const char *str);
-int				print_error_msg(char *msg);
-unsigned long	get_ms_time(void);
-void			philo_alarm(unsigned long time);
 
 /* initialize.c */
 int				check_arg(int argc, char **argv, t_game *game);
-int				malloc_struct(t_game *game);
 int				init_game(int argc, char **argv, t_game *game);
 int				init_philo(t_game *game, t_philo *philo);
-void			*monitoring_thread(void *param);
 
 /* thread.c */
-unsigned long	time_check(t_philo *philo);
-int				print_msg(t_philo *philo, char type);
-void			*philo_thread(void *param);
-
-/* routine.c */
 int				philo_grab_fork(t_philo *philo);
 int				philo_eat(t_philo *philo);
 int				philo_sleep(t_philo *philo);
+void			*philo_thread(void *param);
+void			*monitoring_thread(void *param);
+
+/* print.c */
+int				print_error_msg(char *msg);
+int				print_msg(t_philo *philo, char type);
+
+/* time.c */
+unsigned long	get_ms_time(void);
+void			philo_alarm(unsigned long time);
+unsigned long	time_check(t_philo *philo);
 
 # define	TRUE 1
 # define	FALSE 0

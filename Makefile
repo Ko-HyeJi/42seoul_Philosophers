@@ -13,8 +13,7 @@
 NAME = philo
 
 CC = cc
-CFLAG = -Wall -Wextra -Werror
-#-g3 -fsanitize=thread
+CFLAG = -Wall -Wextra -Werror #-g3 -fsanitize=thread
 DEBUG = -g -fsanitize=address
 RM = rm -rf
 INCLUDE = include

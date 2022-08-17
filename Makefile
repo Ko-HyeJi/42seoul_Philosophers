@@ -6,7 +6,7 @@
 #    By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/09 15:40:30 by hyko              #+#    #+#              #
-#    Updated: 2022/08/12 22:38:17 by hyko             ###   ########.fr        #
+#    Updated: 2022/08/17 17:19:36 by hyko             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,8 @@ SRC = $(addprefix ./src/, main.c\
 philo_utils.c\
 initialize.c\
 thread.c\
-routine.c)
+print.c\
+time.c)
 
 OBJ = $(SRC:.c=.o)
 

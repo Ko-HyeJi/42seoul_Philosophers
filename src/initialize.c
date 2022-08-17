@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 09:21:26 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/15 02:34:25 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/17 13:33:51 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	check_arg(int argc, char **argv, t_game *game)
 	game->time_to_die = ft_atol(argv[2]);
 	game->time_to_eat = ft_atol(argv[3]);
 	game->time_to_sleep = ft_atol(argv[4]);
-	if (game->num_of_philo < 0 || game->time_to_die < 0|| game->time_to_eat < 0 || game->time_to_sleep < 0)
+	if (game->num_of_philo <= 0 || game->time_to_die < 0|| game->time_to_eat < 0 || game->time_to_sleep < 0)
 		return (-1);
 	if (argc == 6)
 	{

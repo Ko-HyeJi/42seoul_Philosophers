@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 11:02:48 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/18 10:38:58 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/18 11:40:54 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	*philo_thread(void *param) //매개변수를 void*로 받아서 t_philo*로
 		else
 			break ;
 	}
-	philo->game->eat_flag++;
+	philo->game->num_of_full_philo++;
 	pthread_detach(philo->thread);
 	return (0);
 }
@@ -80,7 +80,7 @@ void	*monitoring_thread(void *param)
 	philo = (t_philo *)param;
 	while (philo->game->death_flag == 0)
 	{
-		if (philo->game->eat_flag == philo->game->num_of_philo)
+		if (philo->game->num_of_full_philo == philo->game->num_of_philo)
 			break ;
 		i = 0;
 		while (i < philo->game->num_of_philo)

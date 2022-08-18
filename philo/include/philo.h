@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 16:08:49 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/18 10:40:18 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/18 11:41:54 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@
 
 typedef struct s_game
 {
-	unsigned long	start_time;
 	int				num_of_philo;
 	unsigned long	time_to_die;
 	unsigned long	time_to_eat;
 	unsigned long	time_to_sleep;
 	int				must_eat;
+	unsigned long	start_time;
 	int				death_flag;
-	int				eat_flag;
+	int				num_of_full_philo;
 	pthread_t		monitoring;
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	print;

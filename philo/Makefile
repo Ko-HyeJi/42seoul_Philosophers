@@ -6,15 +6,14 @@
 #    By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/09 15:40:30 by hyko              #+#    #+#              #
-#    Updated: 2022/08/17 17:19:36 by hyko             ###   ########.fr        #
+#    Updated: 2022/08/18 10:30:37 by hyko             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
 CC = cc
-CFLAG = -Wall -Wextra -Werror #-g3 -fsanitize=thread
-DEBUG = -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror #-g3 -fsanitize=thread
 RM = rm -rf
 INCLUDE = include
 
@@ -31,19 +30,16 @@ time.c)
 OBJ = $(SRC:.c=.o)
 
 $(NAME) : $(OBJ)
-	$(CC) $(CFLAG) -o $@ $^
+	$(CC) $(CFLAGS) -o $@ $^
 
 all : $(NAME)
 
-debug :
-	$(MAKE) DEBUG_FLAG=1 all
-
 clean :
-	$(RM) $(OBJ) $(OBJ_BN)
+	$(RM) $(OBJ)
 
 fclean : clean
-	$(RM) $(NAME) $(BONUS)
+	$(RM) $(NAME)
 
 re : fclean all
 
-.PHONY : all clean fclean re debug
+.PHONY : all clean fclean re

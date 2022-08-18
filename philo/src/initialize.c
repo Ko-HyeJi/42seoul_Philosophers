@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 09:21:26 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/17 17:26:00 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/18 10:12:45 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ int	check_arg(int argc, char **argv, t_game *game)
 {
 	int	i;
 
-	if (argc < 5 || argc > 6)
-		return (-1);
 	i = 1;
 	while (argv[i])
 	{
@@ -29,7 +27,8 @@ int	check_arg(int argc, char **argv, t_game *game)
 	game->time_to_die = ft_atol(argv[2]);
 	game->time_to_eat = ft_atol(argv[3]);
 	game->time_to_sleep = ft_atol(argv[4]);
-	if (game->num_of_philo <= 0 || game->time_to_die < 0 || game->time_to_eat < 0 || game->time_to_sleep < 0)
+	if (game->num_of_philo <= 0 || game->time_to_die < 0
+		|| game->time_to_eat < 0 || game->time_to_sleep < 0)
 		return (-1);
 	if (argc == 6)
 	{
@@ -47,17 +46,10 @@ int	init_game(int argc, char **argv, t_game *game)
 	int	i;
 
 	if (check_arg(argc, argv, game) < 0)
-	{
-		free (game);
 		return (print_error_msg("error : invalid argument\n"));
-	}
 	game->fork = malloc(sizeof(pthread_mutex_t) * game->num_of_philo);
 	if (game->fork == NULL)
-	{
-		free (game->fork);
-		free (game);
 		return (print_error_msg("error : memory allocation failed\n"));
-	}
 	i = 0;
 	while (i < game->num_of_philo)
 	{

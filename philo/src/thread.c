@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 11:02:48 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/17 17:13:29 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/18 10:38:58 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	philo_sleep(t_philo *philo)
 	return (0);
 }
 
-void *philo_thread(void *param) //매개변수를 void*로 받아서 t_philo*로 캐스팅 해줘야 함
+void	*philo_thread(void *param) //매개변수를 void*로 받아서 t_philo*로 캐스팅 해줘야 함
 {
 	t_philo	*philo;
 
@@ -69,7 +69,7 @@ void *philo_thread(void *param) //매개변수를 void*로 받아서 t_philo*로
 	}
 	philo->game->eat_flag++;
 	pthread_detach(philo->thread);
-	return (philo);
+	return (0);
 }
 
 void	*monitoring_thread(void *param)
@@ -81,18 +81,14 @@ void	*monitoring_thread(void *param)
 	while (philo->game->death_flag == 0)
 	{
 		if (philo->game->eat_flag == philo->game->num_of_philo)
-		{
-			printf("All philosophers ate it all\n");
 			break ;
-		}
 		i = 0;
 		while (i < philo->game->num_of_philo)
 		{
 			if (philo[i].game->must_eat == philo[i].eat_cnt)
-			{
 				i++;
-			}
-			else if (get_ms_time() - philo[i].last_eat >= philo->game->time_to_die)
+			else if (get_ms_time() - philo[i].last_eat
+				>= philo->game->time_to_die)
 			{
 				philo->game->death_flag = i + 1;
 				print_msg(&philo[i], 'd');

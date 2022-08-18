@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 16:08:49 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/18 11:41:54 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/18 19:03:55 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,20 @@ typedef struct s_game
 	int				must_eat;
 	unsigned long	start_time;
 	int				death_flag;
-	int				num_of_full_philo;
 	pthread_t		monitoring;
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	print;
+	pthread_mutex_t	death;
 }	t_game;
 
 typedef struct s_philo
 {
+	unsigned long	time_to_die;
+	unsigned long	time_to_eat;
+	unsigned long	time_to_sleep;
+	int				must_eat;
+	unsigned long	start_time;
+
 	t_game			*game;
 	int				id;
 	pthread_t		thread;
@@ -44,6 +50,10 @@ typedef struct s_philo
 	pthread_mutex_t	*right_fork;
 	int				eat_cnt;
 	unsigned long	last_eat;
+	int				is_full;
+	pthread_mutex_t	full_mutex;
+	pthread_mutex_t last_eat_mutex;
+
 }	t_philo;
 
 /* philo_utils.c */
@@ -70,6 +80,8 @@ int				print_msg(t_philo *philo, char type);
 unsigned long	get_ms_time(void);
 void			philo_alarm(unsigned long time);
 unsigned long	time_check(t_philo *philo);
+
+int	death_check(t_philo *philo);
 
 # define TRUE 1
 # define FALSE 0

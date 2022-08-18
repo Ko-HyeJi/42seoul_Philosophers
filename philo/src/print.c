@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 17:12:40 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/17 17:13:08 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/18 18:52:25 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	print_error_msg(char *msg)
 int	print_msg(t_philo *philo, char type)
 {
 	pthread_mutex_lock(&(philo->game->print));
-	if (philo->game->death_flag == 0)
+	if (death_check(philo) == 0)
 	{
 		if (type == 'f')
 			printf("%lu %d has taken a fork\n", time_check(philo), philo->id);
@@ -39,6 +39,9 @@ int	print_msg(t_philo *philo, char type)
 		pthread_mutex_unlock(&(philo->game->print));
 	}
 	else
+	{
+		pthread_mutex_unlock(&(philo->game->print));
 		return (-1);
+	}
 	return (0);
 }

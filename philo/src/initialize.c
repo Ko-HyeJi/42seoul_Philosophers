@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 09:21:26 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/18 10:12:45 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/18 20:02:50 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	check_arg(int argc, char **argv, t_game *game)
 	if (argc == 6)
 	{
 		game->must_eat = ft_atol(argv[5]);
-		if (game->must_eat < 0)
+		if (game->must_eat <= 0)
 			return (-1);
 	}
 	else
@@ -59,6 +59,7 @@ int	init_game(int argc, char **argv, t_game *game)
 	game->start_time = get_ms_time();
 	game->death_flag = 0;
 	pthread_mutex_init(&game->print, NULL);
+	pthread_mutex_init(&game->death, NULL);
 	return (0);
 }
 
@@ -76,9 +77,18 @@ int	init_philo(t_game *game, t_philo *philo)
 		else
 			philo[i].right_fork = &game->fork[i + 1];
 		philo[i].game = game;
-		philo[i].last_eat = game->start_time;
+		philo[i].time_to_die = game->time_to_die;
+		philo[i].time_to_eat = game->time_to_eat;
+		philo[i].time_to_sleep = game->time_to_sleep;
+		philo[i].must_eat = game->must_eat;
+		philo[i].start_time = game->start_time;
+		philo[i].last_eat = philo[i].start_time;
+		philo[i].eat_cnt = 0;
+		philo[i].is_full = 0;
+		pthread_mutex_init(&philo[i].full_mutex, NULL);
+		pthread_mutex_init(&philo[i].last_eat_mutex, NULL);
 		pthread_create(&(philo[i].thread), NULL, &(philo_thread), &(philo[i]));
-		usleep(10);
+		// usleep(10);
 		i++;
 	}
 	return (0);

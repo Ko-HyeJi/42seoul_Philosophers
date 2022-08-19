@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 14:45:35 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/17 17:15:34 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/19 15:43:30 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,16 @@ long long	ft_atol(const char *str)
 		i++;
 	}
 	return (result * sign);
+}
+
+int	death_check(t_philo *philo)
+{
+	pthread_mutex_lock(&(philo->game->death));
+	if (philo->game->death_flag == 0)
+	{
+		pthread_mutex_unlock(&(philo->game->death));
+		return (0);
+	}
+	pthread_mutex_unlock(&(philo->game->death));
+	return (-1);
 }

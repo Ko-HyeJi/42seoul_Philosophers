@@ -6,14 +6,14 @@
 #    By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/09 15:40:30 by hyko              #+#    #+#              #
-#    Updated: 2022/08/18 19:38:09 by hyko             ###   ########.fr        #
+#    Updated: 2022/08/19 17:02:14 by hyko             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror #-g3 -fsanitize=thread
 RM = rm -rf
 INCLUDE = include
 
@@ -23,7 +23,9 @@ INCLUDE = include
 SRC = $(addprefix ./src/, main.c\
 philo_utils.c\
 initialize.c\
-thread.c\
+philo_thread.c\
+monitoring_thread.c\
+routine.c\
 print.c\
 time.c)
 

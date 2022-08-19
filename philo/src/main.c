@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:38:13 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/18 19:55:55 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/19 17:01:38 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,5 @@ int	main(int argc, char **argv)
 	}
 	free(game.fork);
 	free(philo);
-	// system("leaks philo"); 
 	return (0);
 }

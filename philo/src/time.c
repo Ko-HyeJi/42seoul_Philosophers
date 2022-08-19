@@ -6,13 +6,13 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 17:11:42 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/17 17:12:17 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/19 17:00:53 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-unsigned long	get_ms_time(void) //현재시간을 ms 단위로 반환
+unsigned long	get_ms_time(void)
 {
 	struct timeval	time;
 	unsigned long	ms_time;
@@ -22,8 +22,6 @@ unsigned long	get_ms_time(void) //현재시간을 ms 단위로 반환
 	return (ms_time);
 }
 
-//usleep은 인자로 받은 시간에 정확히 끝나는 것이 아니고, 
-//최소 인자만큼은 보장을 해주는 것이라 정확한 시간 측정이 필요함
 void	philo_alarm(unsigned long time)
 {
 	unsigned long	sleep_time;
@@ -38,10 +36,10 @@ void	philo_alarm(unsigned long time)
 	}
 }
 
-unsigned long	time_check(t_philo *philo) //현재시간 - 시작시간
+unsigned long	time_check(t_philo *philo)
 {
 	unsigned long	time_gap;
 
-	time_gap = get_ms_time() - philo->game->start_time;
+	time_gap = get_ms_time() - philo->start_time;
 	return (time_gap);
 }

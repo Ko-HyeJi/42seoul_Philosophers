@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 09:21:26 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/18 20:02:50 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/19 15:49:38 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,11 @@ int	init_philo(t_game *game, t_philo *philo)
 	while (i < game->num_of_philo)
 	{
 		philo[i].id = i + 1;
-		philo[i].left_fork = &game->fork[i];
+		philo[i].l_fork = &game->fork[i];
 		if ((i + 1) == game->num_of_philo)
-			philo[i].right_fork = &game->fork[0];
+			philo[i].r_fork = &game->fork[0];
 		else
-			philo[i].right_fork = &game->fork[i + 1];
+			philo[i].r_fork = &game->fork[i + 1];
 		philo[i].game = game;
 		philo[i].time_to_die = game->time_to_die;
 		philo[i].time_to_eat = game->time_to_eat;
@@ -83,12 +83,9 @@ int	init_philo(t_game *game, t_philo *philo)
 		philo[i].must_eat = game->must_eat;
 		philo[i].start_time = game->start_time;
 		philo[i].last_eat = philo[i].start_time;
-		philo[i].eat_cnt = 0;
-		philo[i].is_full = 0;
 		pthread_mutex_init(&philo[i].full_mutex, NULL);
 		pthread_mutex_init(&philo[i].last_eat_mutex, NULL);
 		pthread_create(&(philo[i].thread), NULL, &(philo_thread), &(philo[i]));
-		// usleep(10);
 		i++;
 	}
 	return (0);

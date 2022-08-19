@@ -6,17 +6,11 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 17:12:40 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/19 15:31:52 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/19 17:18:08 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-int	print_error_msg(char *msg)
-{
-	printf("%s", msg);
-	return (-1);
-}
 
 int	print_msg(t_philo *philo, char type)
 {
@@ -44,4 +38,10 @@ int	print_msg(t_philo *philo, char type)
 		return (-1);
 	}
 	return (0);
+}
+
+int	print_error_msg(char *msg)
+{
+	printf("%s", msg);
+	return (-1);
 }

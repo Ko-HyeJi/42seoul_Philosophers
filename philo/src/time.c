@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 17:11:42 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/19 17:00:53 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/19 17:19:47 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,14 @@ unsigned long	get_ms_time(void)
 	return (ms_time);
 }
 
+unsigned long	time_check(t_philo *philo)
+{
+	unsigned long	time_gap;
+
+	time_gap = get_ms_time() - philo->start_time;
+	return (time_gap);
+}
+
 void	philo_alarm(unsigned long time)
 {
 	unsigned long	sleep_time;
@@ -34,12 +42,4 @@ void	philo_alarm(unsigned long time)
 		usleep(300);
 		sleep_time = get_ms_time();
 	}
-}
-
-unsigned long	time_check(t_philo *philo)
-{
-	unsigned long	time_gap;
-
-	time_gap = get_ms_time() - philo->start_time;
-	return (time_gap);
 }

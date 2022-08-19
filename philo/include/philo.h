@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 16:08:49 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/19 17:06:37 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/19 17:19:36 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ typedef struct s_philo
 }	t_philo;
 
 /* initialize.c */
-int				check_arg(int argc, char **argv, t_game *game);
 int				init_game(int argc, char **argv, t_game *game);
 int				init_philo(t_game *game, t_philo *philo);
 
@@ -67,8 +66,8 @@ void			*monitoring_thread(void *param);
 void			*philo_thread(void *param);
 
 /* print.c */
-int				print_error_msg(char *msg);
 int				print_msg(t_philo *philo, char type);
+int				print_error_msg(char *msg);
 
 /* routine.c */
 int				philo_grab_fork(t_philo *philo);
@@ -77,8 +76,8 @@ int				philo_sleep(t_philo *philo);
 
 /* time.c */
 unsigned long	get_ms_time(void);
-void			philo_alarm(unsigned long time);
 unsigned long	time_check(t_philo *philo);
+void			philo_alarm(unsigned long time);
 
 /* utils.c */
 int				is_num(char *str);

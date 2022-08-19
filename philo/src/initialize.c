@@ -6,13 +6,13 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 09:21:26 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/19 15:49:38 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/19 17:16:13 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	check_arg(int argc, char **argv, t_game *game)
+static int	check_arg(int argc, char **argv, t_game *game)
 {
 	int	i;
 

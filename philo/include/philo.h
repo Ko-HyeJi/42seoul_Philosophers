@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 16:08:49 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/19 16:27:56 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/19 17:06:37 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,35 +55,35 @@ typedef struct s_philo
 
 }	t_philo;
 
-/* philo_utils.c */
-int				is_num(char *str);
-long long		ft_atol(const char *str);
-int				death_check(t_philo *philo);
-
 /* initialize.c */
 int				check_arg(int argc, char **argv, t_game *game);
 int				init_game(int argc, char **argv, t_game *game);
 int				init_philo(t_game *game, t_philo *philo);
 
+/* monitoring_thread.c */
+void			*monitoring_thread(void *param);
+
 /* philo_thread.c */
 void			*philo_thread(void *param);
 
-/* monitoring_thread.c */
-void			*monitoring_thread(void *param);
+/* print.c */
+int				print_error_msg(char *msg);
+int				print_msg(t_philo *philo, char type);
 
 /* routine.c */
 int				philo_grab_fork(t_philo *philo);
 int				philo_eat(t_philo *philo);
 int				philo_sleep(t_philo *philo);
 
-/* print.c */
-int				print_error_msg(char *msg);
-int				print_msg(t_philo *philo, char type);
-
 /* time.c */
 unsigned long	get_ms_time(void);
 void			philo_alarm(unsigned long time);
 unsigned long	time_check(t_philo *philo);
+
+/* utils.c */
+int				is_num(char *str);
+long long		ft_atol(const char *str);
+int				death_check(t_philo *philo);
 
 # define TRUE 1
 # define FALSE 0

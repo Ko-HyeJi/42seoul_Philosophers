@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:38:13 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/19 17:01:38 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/19 17:08:37 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int argc, char **argv)
 	int		i;
 
 	if (argc < 5 || argc > 6)
-		return (-1);
+		return (print_error_msg("error : invalid argument\n"));
 	if (init_game(argc, argv, &game) < 0)
 		return (print_error_msg("error : game initialization failed\n"));
 	philo = malloc(sizeof(t_philo) * game.num_of_philo);

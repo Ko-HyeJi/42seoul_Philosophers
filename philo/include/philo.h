@@ -6,14 +6,13 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 16:08:49 by hyko              #+#    #+#             */
-/*   Updated: 2022/08/19 17:19:36 by hyko             ###   ########.fr       */
+/*   Updated: 2022/08/20 16:37:56 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include <string.h> //memset
 # include <stdio.h> //printf
 # include <stdlib.h> //malloc, free
 # include <unistd.h> //write, usleep
